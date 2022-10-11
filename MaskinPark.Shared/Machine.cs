@@ -1,8 +1,8 @@
-﻿namespace MaskinPark.Models
+﻿namespace MaskinPark.Shared
 {
     public class Machine
     {
-        public int Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString("n");
 
         public string Name { get; set; }
 

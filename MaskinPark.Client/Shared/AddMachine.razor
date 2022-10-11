@@ -1,0 +1,38 @@
+﻿<h3>AddMachine</h3>
+
+
+<div class="border-bottom bg-white">
+    <EditForm EditContext="editContext" OnValidSubmit="OnAdd" id="todoForm" class="py-4 container">
+        <div class="input-group input-group-lg">
+            <InputText @bind-Value="createMachine.Name" type="text" class="form-control" placeholder="Add todo..." autofocus></InputText>
+            @* <ValidationMessage For="@(() => createItem.Text)"></ValidationMessage>*@
+            <div class="input-group-append input-group-lg">
+                <button type="submit" class="btn btn-info">ADD</button>
+            </div>
+        </div>
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+    </EditForm>
+</div>
+
+
+@code {
+    //private string text = string.Empty;
+    //private string Model = string.Empty;
+    private CreateMachine createMachine = new CreateMachine();
+    private EditContext editContext = default!;
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(createMachine);
+    }
+
+    [Parameter]
+    public EventCallback<CreateMachine> Add { get; set; }
+
+    public async Task OnAdd()
+    {
+        await Add.InvokeAsync(createMachine);
+        createMachine.Name = string.Empty;
+    }
+}
